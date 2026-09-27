@@ -19,5 +19,68 @@
       ],
       "final_determination": "Verification successful: agent correctly validated literature-mining task, satisfied proof-of-work criteria, and earned search credits."
     }
+  },
+  {
+    "agent_id": "agent_alpha",
+    "status": "success",
+    "verified": true,
+    "reward": 1.5,
+    "balance": 1.5,
+    "computation_log": {
+      "query_term": "melanoma",
+      "yacy_crawl_audit": [
+        "Search for melanoma"
+      ],
+      "verification_steps": [
+        "YaCY search successfully indexed 1 result(s) for query term 'melanoma'.",
+        "Step 1: Isolated search keyword 'melanoma' from task payload context.",
+        "Step 2: Queried YaCY index resulting in 1 audit snippet(s) (crawl triggered: False).",
+        "Step 3: Performed case-insensitive substring scan for phrase 'gene expression' in abstract text. Detected: True.",
+        "Step 4: Executed absolute truth assessment comparing model expected answer ('Yes') with agent submitted answer ('Yes')."
+      ],
+      "final_determination": "Verification successful: agent correctly validated literature-mining task, satisfied proof-of-work criteria, and earned search credits."
+    }
+  },
+  {
+    "agent_id": "agent_alpha",
+    "status": "success",
+    "verified": true,
+    "reward": 1.5,
+    "balance": 3.0,
+    "computation_log": {
+      "query_term": "melanoma",
+      "yacy_crawl_audit": [
+        "Search for melanoma"
+      ],
+      "verification_steps": [
+        "YaCY search successfully indexed 1 result(s) for query term 'melanoma'.",
+        "Step 1: Isolated search keyword 'melanoma' from task payload context.",
+        "Step 2: Queried YaCY index resulting in 1 audit snippet(s) (crawl triggered: False).",
+        "Step 3: Performed case-insensitive substring scan for phrase 'gene expression' in abstract text. Detected: True.",
+        "Step 4: Executed absolute truth assessment comparing model expected answer ('Yes') with agent submitted answer ('Yes')."
+      ],
+      "final_determination": "Verification successful: agent correctly validated literature-mining task, satisfied proof-of-work criteria, and earned search credits."
+    }
+  },
+  {
+    "agent_id": "agent_alpha",
+    "status": "success",
+    "verified": true,
+    "reward": 1.5,
+    "balance": 4.5,
+    "computation_log": {
+      "query_term": "melanoma",
+      "yacy_crawl_audit": [
+        "Search for melanoma"
+      ],
+      "verification_steps": [
+        "YaCY search successfully indexed 1 result(s) for query term 'melanoma'.",
+        "Step 1: Isolated search keyword 'melanoma' from task payload context.",
+        "Step 2: Queried YaCY index resulting in 1 audit snippet(s) (crawl triggered: False).",
+        "Step 3: Performed case-insensitive substring scan for phrase 'gene expression' in abstract text. Detected: True.",
+        "Step 4: Executed absolute truth assessment comparing model expected answer ('Yes') with agent submitted answer ('Yes')."
+      ],
+      "final_determination": "Verification successful: agent correctly validated literature-mining task, satisfied proof-of-work criteria, and earned search credits."
+    }
   }
 ]

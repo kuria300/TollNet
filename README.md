@@ -47,8 +47,8 @@ Developers can inspect, monitor, and format audit records live from the terminal
 
 TollNet incorporates intelligent automated fallback and harvesting hooks:
 - **Dynamic Keyword Isolation**: Incoming task payloads are inspected to isolate target research keywords (e.g., `"gene expression"`, `"melanoma"`, or `"oncology"`).
-- **Zero-Hit YaCY Crawl Fallback**: If querying the local YaCY search cluster at `http://localhost:8090/yacysearch.json` for the isolated keyword returns zero indexed results, the FastAPI gateway asynchronously invokes YaCY's administrative crawler servlet (`http://localhost:8090/yacy/crawler_p.html`).
-- **Secure Authentication**: Authenticates against YaCY using secure default administrative credentials (`admin` / `yacy`), programmatically triggering an isolated background crawl of `https://example.com` (`crawlingDepth: 1`, `crawlingMode: isolated`).
+- **Zero-Hit YaCY Crawl Fallback**: If querying the local YaCY search cluster at `http://localhost:8090/yacysearch.json` for the isolated keyword returns zero indexed results, the FastAPI gateway checks for `YACY_ADMIN_USER` and `YACY_ADMIN_PASS` environment variables.
+- **Environment-Based Authentication**: If administrative credentials are set in the environment, TollNet asynchronously invokes YaCY's administrative crawler servlet (`http://localhost:8090/yacy/crawler_p.html`) using HTTP Basic Auth to trigger an isolated background crawl of `https://example.com` (`crawlingDepth: 1`, `crawlingMode: isolated`). If unset, the auto-crawl feature is skipped gracefully rather than attempting default credentials.
 
 ---
 

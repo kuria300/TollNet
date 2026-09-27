@@ -171,33 +171,44 @@ async def submit_work_endpoint(req: WorkSubmission) -> Dict[str, Any]:
 
             # 3. Dynamic YaCY Crawl Fallback if zero indexed results are returned
             if not yacy_snippets:
-                verification_steps.append(
-                    f"YaCY search for '{query_term}' returned zero indexed results. Initiating dynamic background crawl of https://example.com."
-                )
-                crawl_triggered = True
-                try:
-                    crawl_resp = await client.post(
-                        "http://localhost:8090/yacy/crawler_p.html",
-                        auth=("admin", "yacy"),
-                        data={
-                            "crawlingURL": "https://example.com",
-                            "crawlingDepth": "1",
-                            "crawlingMode": "isolated",
-                            "crawlingDomination": "domain",
-                            "startCrawl": "Start New Crawl",
-                        },
+                yacy_user = os.getenv("YACY_ADMIN_USER")
+                yacy_pass = os.getenv("YACY_ADMIN_PASS")
+
+                if yacy_user and yacy_pass:
+                    verification_steps.append(
+                        f"YaCY search for '{query_term}' returned zero indexed results. Initiating dynamic background crawl of https://example.com."
                     )
-                    if crawl_resp.status_code in (200, 302, 303):
-                        yacy_snippets.append(
-                            "Dynamic background crawl of https://example.com successfully triggered on YaCY admin servlet."
+                    crawl_triggered = True
+                    try:
+                        crawl_resp = await client.post(
+                            "http://localhost:8090/yacy/crawler_p.html",
+                            auth=(yacy_user, yacy_pass),
+                            data={
+                                "crawlingURL": "https://example.com",
+                                "crawlingDepth": "1",
+                                "crawlingMode": "isolated",
+                                "crawlingDomination": "domain",
+                                "startCrawl": "Start New Crawl",
+                            },
                         )
-                    else:
+                        if crawl_resp.status_code in (200, 302, 303):
+                            yacy_snippets.append(
+                                "Dynamic background crawl of https://example.com successfully triggered on YaCY admin servlet."
+                            )
+                        else:
+                            yacy_snippets.append(
+                                f"YaCY crawler servlet responded with status code {crawl_resp.status_code}."
+                            )
+                    except Exception as crawl_err:
                         yacy_snippets.append(
-                            f"YaCY crawler servlet responded with status code {crawl_resp.status_code}."
+                            f"YaCY crawler fallback hook encountered connection error: {str(crawl_err)}"
                         )
-                except Exception as crawl_err:
+                else:
                     yacy_snippets.append(
-                        f"YaCY crawler fallback hook encountered connection error: {str(crawl_err)}"
+                        "Dynamic background crawl skipped: YACY_ADMIN_USER and YACY_ADMIN_PASS environment variables are not set."
+                    )
+                    verification_steps.append(
+                        "YaCY search returned zero hits, but automated background crawl was skipped because YACY_ADMIN_USER and YACY_ADMIN_PASS are not configured."
                     )
             else:
                 verification_steps.append(
